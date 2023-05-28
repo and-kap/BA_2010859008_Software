@@ -1,0 +1,81 @@
+version: "3.6"
+
+networks:
+  main:
+  load:
+
+services:
+  db:
+    image: postgres
+    container_name: company-db
+    networks:
+      - main
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - ${SQL_PATH}:/docker-entrypoint-initdb.d
+
+  api-1:
+    image: openjdk
+    container_name: company-api-1
+    networks:
+      - main
+      - load
+    build: ./company-manager-server
+    depends_on:
+      - db
+      
+  api-2:
+    image: openjdk
+    container_name: company-api-2
+    networks:
+      - main
+      - load
+    build: ./company-manager-server
+    depends_on:
+      - db
+
+  api-3:
+    image: openjdk
+    container_name: company-api-3
+    networks:
+      - main
+      - load
+    build: ./company-manager-server
+    depends_on:
+      - db
+  # ports:
+  #   - "8080:8080"
+
+  log:
+    image: python:3.10
+    container_name: log_server
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ${LOG_SERVER_PATH}/log_server.py:/usr/src/app/app.py
+      - ${LOG_SERVER_PATH}/requirements.txt:/usr/src/app/requirements.txt
+    #  - ${LOG_SERVER_PATH}/log.csv:/usr/src/app/log.csv
+    command: "python3 /usr/src/app/app.py"
+
+  balancer:
+    image: haproxy
+    container_name: proxy
+    volumes:
+      - ${LOAD_BALANCER_PATH}/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ${LOAD_BALANCER_PATH}/cors.lua:/etc/haproxy/cors.lua
+    networks:
+      - load
+    depends_on:
+      - api-1
+      - api-2
+      - api-3
+    ports:
+      - "8080:80"

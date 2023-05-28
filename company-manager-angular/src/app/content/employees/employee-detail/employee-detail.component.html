@@ -1,0 +1,52 @@
+<div class="container-fluid" *ngIf="this.formGroup">
+  <div class="row my-2">
+    <div class="col-sm-12 col-md-9 d-md-inline-flex">
+      <h3 class="me-md-auto">Employee Detail
+        <ng-container *ngIf="this.employee">for
+          <span class="highlight-blue"> {{this.employee.lastname}}</span>
+        </ng-container>
+      </h3>
+      <button type="button" class="btn btn-sm btn-danger" [style]="{height: 'fit-content'}"
+              (click)="this.onDelete()"
+              *ngIf="this.employeeId">
+        <i class="bi bi-trash me-1"></i>Delete
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="this.formGroup">
+    <div class="form-group row mt-2 align-items-center" *ngFor="let field of this.fields">
+      <label [for]="'id_' + field.key" class="col-md-3 col-sm-12">
+        {{field.label}}
+        <ng-container *ngIf="field.required">*</ng-container>
+      </label>
+      <div class="col-md-6 col-sm-12">
+        <ng-container [ngSwitch]="field.key">
+          <ng-container *ngSwitchCase="'manager'">
+            <select [id]="'id_' + field.key" [formControlName]="field.key" class="form-control">
+              <option [ngValue]="null" [selected]="true">Please select ...</option>
+              <option *ngFor="let manager of this.managers" [ngValue]="manager.id">{{manager.lastname}} ({{manager.job}})</option>
+            </select>
+          </ng-container>
+          <ng-container *ngSwitchCase="'department'">
+            <select [id]="'id_' + field.key" [formControlName]="field.key" class="form-control">
+              <option [ngValue]="null" [selected]="true">Please select ...</option>
+              <option *ngFor="let department of this.departments" [ngValue]="department.id">{{department.name}}</option>
+            </select>
+          </ng-container>
+
+          <input *ngSwitchDefault [id]="'id_' + field.key" [type]="field.type" class="form-control"
+                 [formControlName]="field.key" [placeholder]="field.label"/>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-9 col-sm-12 text-end">
+        <button type="button" class="btn btn-sm btn-secondary me-2" (click)="this.navBack()">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-success" [disabled]="this.formGroup.invalid"
+                (click)="this.onSave()">Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

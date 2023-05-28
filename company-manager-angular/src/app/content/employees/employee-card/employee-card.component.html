@@ -1,0 +1,35 @@
+<div class="card company-card" (click)="this.navToDetail(employee.id)">
+  <div class="card-body">
+    <div class="d-inline-flex w-100">
+      <h5 class="card-title me-auto">{{employee.lastname}}</h5>
+      <span class="badge text-bg-primary dept-badge" *ngIf="employee.department; else noDepartment">
+              {{employee.department.name}}
+            </span>
+      <ng-template #noDepartment>
+        <span class="badge text-bg-danger dept-badge">no department</span>
+      </ng-template>
+    </div>
+
+    <h6 class="card-subtitle mb-2 text-muted">{{employee.job}}</h6>
+    <div class="card-text">
+      <div class="row">
+        <div class="col-6">
+          <i class="bi bi-calendar me-2"></i>{{employee.hireDate | date: 'dd.MM.yyyy'}}
+        </div>
+        <div class="col-6 text-end">
+          <i class="bi bi-cash me-2"></i>
+          <span>{{employee.salary | number: '.2'}} €</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <i class="bi bi-person me-2"></i>{{employee.manager?.lastname || '-'}}
+        </div>
+        <div class="col-6 text-end" *ngIf="employee.commission">
+          <i class="bi bi-piggy-bank-fill me-2"></i>
+          <span>{{employee.commission | number: '.2'}} €</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

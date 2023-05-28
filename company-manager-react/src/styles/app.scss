@@ -1,0 +1,33 @@
+@import '~bootstrap/scss/bootstrap';
+
+.app {
+  background-color: #efefef !important;
+}
+.round-border {
+  border-radius: 25em;
+  border: 1px solid lightgrey;
+}
+
+.container-scroll {
+  overflow-y: auto;
+  padding-bottom: 3.5rem;
+}
+
+.navbar-nav .nav-link.active {
+  color: #3498db !important;
+}
+
+.company-card {
+  box-shadow: 5px 5px 5px silver;
+  border: none !important;
+  border-left: 7px solid #3498db !important;
+}
+
+.company-card:hover {
+  background-color: #e0e0e0 !important;
+  cursor: pointer;
+}
+
+.highlight-blue{
+  color: $blue;
+}

@@ -1,0 +1,53 @@
+<div class="container-fluid mt-4 container-scroll" *ngIf="this.page?.items">
+  <div class="row mt-2 mx-3">
+    <div class="col-8">
+      <h3>Employees</h3>
+    </div>
+    <div class="col-4">
+      <button type="button" class="btn btn-sm btn-success float-end ms-2" [routerLink]="['/employees', 'new']">
+        <i class="bi bi-plus me-1"></i> Add
+      </button>
+    </div>
+  </div>
+  <div class="row mt-2 mx-3 my-2">
+    <div class="col-12 text-end">
+      <div class="d-inline-flex justify-content-center">
+        <input id="dom_size" type="number" class="form-control me-2 float-end"
+               [style]="{maxWidth: '200px !important'}"
+               [(ngModel)]="this.size"/>
+        <button id="dom_add" type="button" class="btn btn-sm btn-warning float-end mx-2" (click)="this.addEmployees()">
+          DOM_ADD
+        </button>
+        <button id="dom_edit" type="button" class="btn btn-sm btn-warning float-end mx-2"
+                (click)="this.updateEmployees()">
+          DOM_EDIT
+        </button>
+        <button id="dom_delete" type="button" class="btn btn-sm btn-warning float-end mx-2"
+                (click)="this.deleteEmployees()">
+          DOM_DELETE
+        </button>
+        <button id="api_bulk" type="button" class="btn btn-sm btn-primary float-end mx-2"
+                (click)="this.sendBulkRequest()">
+          API_BULK
+        </button>
+        <button id="api_single" type="button" class="btn btn-sm btn-primary float-end ms-2"
+                (click)="this.sendSingleRequests()">
+          API_SINGLE
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-3" *ngIf="this.page">
+    <div class="col-sm-12 col-md-6 col-lg-4 mt-3" *ngFor="let employee of this.page.items">
+      <app-employee-card [employee]="employee"></app-employee-card>
+    </div>
+  </div>
+
+  <div class="row mx-3" *ngIf="this.employees">
+    <div class="col-sm-12 col-md-6 col-lg-4 mt-3" *ngFor="let employee of this.employees">
+      <app-employee-card [employee]="employee"></app-employee-card>
+    </div>
+  </div>
+</div>
+

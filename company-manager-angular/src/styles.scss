@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$blue: #3498db;
+
+.app {
+  background-color: #efefef !important;
+}
+.round-border {
+  border-radius: 25em;
+  border: 1px solid lightgrey;
+}
+
+.container-scroll {
+  overflow-y: auto;
+  padding-bottom: 3.5rem;
+}
+
+.navbar-nav .nav-link.active {
+  color: $blue !important;
+}
+
+.company-card {
+  box-shadow: 5px 5px 5px silver;
+  border: none !important;
+  border-left: 7px solid $blue !important;
+}
+
+.company-card:hover {
+  background-color: #e0e0e0 !important;
+  cursor: pointer;
+}
+
+.highlight-blue{
+  color: $blue;
+}
